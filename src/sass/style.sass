@@ -9,31 +9,14 @@ html
 body
     margin: 0.5em
 
-ul
-    display: flex
-
-input
-    border-radius: 8px
-    border: 1px solid #ccc
-    padding: 0.25em
-    width: 5em
-
-button
-    border-radius: 8px
-    background: #77a
-    padding: 0.25em 0.5em
-    margin: 0.25em
-
-    &:hover
-        background: #99c
 
 main 
     display: flex
     justify-content: space-around
     align-items: flex-end
     border-radius: 8px
-    border: 1px solid #0d0d0d
-    padding: 1em 0.5em
+    border: 1px solid abs.$black-900
+    padding: 1em 0.5em 0
     margin-block: 0.75em
     height: calc(100vh - 200px)
 
@@ -41,9 +24,10 @@ main
         height: 100%
         flex-grow: 1
         margin: 0 1.5px
-        background: #d00
+        background: abs.$red-900
         cursor: pointer
+        transition: height 0.5s ease
 
         &:hover
-            background: #f33
+            background: abs.$red-700
             
