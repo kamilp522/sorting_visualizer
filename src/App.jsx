@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import "./sass/style.sass";
 
 function App() {
-  const [blocksHeights, setBlocksHeights] = useState([]);
+  const [blocksHeights, setBlocksHeights] = useState(null);
 
   return (
     <>
@@ -13,13 +13,14 @@ function App() {
         blocksHeights={blocksHeights}
         setBlocksHeights={setBlocksHeights}
       />
-      {blocksHeights[0] && (
-        <main>
+      {blocksHeights && (
+        <main id="block-container">
           {blocksHeights.map((blockHeight, index) => (
             <div
               key={index}
               style={{ height: blockHeight }}
               className="block"
+              id={`block-${index}`}
             ></div>
           ))}
         </main>

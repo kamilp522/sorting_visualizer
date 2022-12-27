@@ -5,11 +5,16 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
   const createElements = (event) => {
     event.preventDefault();
     let numberOfElementsInput = document.getElementById("blocks-input");
-    const blocksNumber = numberOfElementsInput.value;
+    const blocksNumber = Number(numberOfElementsInput.value);
     numberOfElementsInput.value = "";
 
     if (!checkIfNumber(blocksNumber)) {
-      console.log("Input has to be a number!");
+      console.log("Input has to be a positive number");
+      return;
+    }
+
+    if (blocksNumber < 5 || blocksNumber > 100) {
+      console.log("Input has to be a number in range between 5 and 100!");
       return;
     }
 
@@ -23,13 +28,26 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
   };
 
   const selectionSort = () => {
-    console.log("selection sort");
+    const blocks = [...document.querySelectorAll(".block")];
+    const blockContainer = document.getElementById("block-container");
+    const heightsArray = [];
+
+    blocks.forEach((block) => {
+      const height = block.style.height;
+      const parsedHeight = +Number(height.replace("%", "")).toFixed(2);
+
+      heightsArray.push(parsedHeight);
+    });
+
+    const min = Math.min(...heightsArray);
+    const minBlockIndex = heightsArray.indexOf(min);
+
+    blockContainer.insertBefore(blocks[minBlockIndex], blocks[0]);
   };
 
   return (
     <header className="header">
       <h1 className="header__title">Sorting Visualizer</h1>
-      <h2 className="header__secondary-title">Choose an algorithm:</h2>
       <form className="header__form" onSubmit={createElements}>
         <label className="header__label">number of elements: </label>
         <input className="header__input" id="blocks-input" type="text" />
@@ -37,35 +55,40 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
           confirm
         </button>
       </form>
-      {blocksHeights[0] && (
-        <ul className="header__list">
-          <li className="header__item">
-            <button className="button button--header" onClick={selectionSort}>
-              Selection
-            </button>
-          </li>
-          <li className="header__item">
-            <button className="button button--header">Bubble</button>
-          </li>
-          <li className="header__item">
-            <button className="button button--header">Insertion</button>
-          </li>
-          <li className="header__item">
-            <button className="button button--header">Merge</button>
-          </li>
-          <li className="header__item">
-            <button className="button button--header">Quick</button>
-          </li>
-          <li className="header__item">
-            <button className="button button--header">Heap</button>
-          </li>
-          <li className="header__item">
-            <button className="button button--header">Radix</button>
-          </li>
-          <li className="header__item">
-            <button className="button button--header">Bogo</button>
-          </li>
-        </ul>
+
+      {blocksHeights && (
+        <>
+          <h2 className="header__secondary-title">Choose an algorithm:</h2>
+
+          <ul className="header__list">
+            <li className="header__item">
+              <button className="button button--header" onClick={selectionSort}>
+                Selection
+              </button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Bubble</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Insertion</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Merge</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Quick</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Heap</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Radix</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Bogo</button>
+            </li>
+          </ul>
+        </>
       )}
     </header>
   );
