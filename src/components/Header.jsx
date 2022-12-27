@@ -34,15 +34,19 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
 
     blocks.forEach((block) => {
       const height = block.style.height;
-      const parsedHeight = +Number(height.replace("%", "")).toFixed(2);
-
+      const parsedHeight = +height.replace("%", "");
       heightsArray.push(parsedHeight);
     });
 
-    const min = Math.min(...heightsArray);
-    const minBlockIndex = heightsArray.indexOf(min);
-
-    blockContainer.insertBefore(blocks[minBlockIndex], blocks[0]);
+    for (let i = 0; i < blocks.length; i++) {
+      const min = Math.min(...heightsArray);
+      const minBlockIndex = heightsArray.indexOf(min);
+      blockContainer.insertBefore(
+        blocks[minBlockIndex],
+        blockContainer.firstChild
+      );
+      heightsArray[minBlockIndex] = Math.max(...heightsArray) + 1;
+    }
   };
 
   return (
@@ -53,6 +57,12 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
         <input className="header__input" id="blocks-input" type="text" />
         <button className="button button--header button--header-confirm">
           confirm
+        </button>
+        <button
+          type="button"
+          className="button button--header button--header-confirm"
+        >
+          randomize
         </button>
       </form>
 
