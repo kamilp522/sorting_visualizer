@@ -32,8 +32,6 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
       heights.push(`${smallestUnit * i}%`);
     }
 
-    console.log(heights);
-
     setBlocksHeights(randomizeArray(heights));
   };
 
@@ -89,22 +87,23 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
     });
   };
 
-  const swapBlocks = async (min, current) => {
+  const swapBlocks = async (array, min, current) => {
     if (min === current) return;
-
+    const speed = 1000;
     const blockContainer = document.getElementById("block-container");
 
-    await waitFor(300);
-
+    await waitFor(speed / 3);
     highlightBlocks(min, current);
 
-    await waitFor(1000);
+    await waitFor(speed);
+    const minCopy = min.cloneNode(true);
+    const currentCopy = current.cloneNode(true);
 
-    blockContainer.insertBefore(min, current);
+    blockContainer.replaceChild(minCopy, current);
+    blockContainer.replaceChild(currentCopy, min);
 
-    await waitFor(300);
-
-    toneDownBlocks(min, current);
+    await waitFor(speed / 3);
+    toneDownBlocks(minCopy, currentCopy);
   };
 
   const selectionSort = async (event) => {
@@ -116,7 +115,7 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
       const blocks = [...document.querySelectorAll(".block")];
       const minBlockHeight = findMinHeight(blocks.slice(i));
       const minBlock = findMinBlock(blocks, minBlockHeight);
-      await swapBlocks(minBlock, blocks[i]);
+      await swapBlocks(blocks, minBlock, blocks[i]);
     }
     setIsSorting(false);
   };
