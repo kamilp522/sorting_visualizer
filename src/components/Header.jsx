@@ -4,11 +4,10 @@ import { randomizeArray } from "../helpers/randomizeArray";
 import { checkIfNumber } from "../helpers/checkIfNumber";
 
 const Header = ({ blocksHeights, setBlocksHeights }) => {
-  const [timeoutId, SetTimeoutId] = useState(null);
+  const [isSorting, setIsSorting] = useState(false);
 
-  const createElements = (event) => {
+  const createBlocksEventHandler = (event) => {
     event.preventDefault();
-
     let numberOfElementsInput = document.getElementById("blocks-input");
     const blocksNumber = Number(numberOfElementsInput.value);
     numberOfElementsInput.value = "";
@@ -23,13 +22,28 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
       return;
     }
 
+    createBlocks(blocksNumber);
+  };
+
+  const createBlocks = (number) => {
     const heights = [];
-    for (let i = 1; i <= blocksNumber; i++) {
-      const smallestUnit = 100 / blocksNumber;
+    for (let i = 1; i <= number; i++) {
+      const smallestUnit = 100 / number;
       heights.push(`${smallestUnit * i}%`);
     }
 
+    console.log(heights);
+
     setBlocksHeights(randomizeArray(heights));
+  };
+
+  const removeBlocks = () => {
+    const blockContainer = document.getElementById("block-container");
+    blockContainer.innerHTML = "";
+    // const blocks = [...document.querySelectorAll(".block")];
+    // for (let i = 0; i < blocks.length; i++) {
+    //   blocks[i].remove();
+    // }
   };
 
   const findMinHeight = (array) => {
@@ -76,7 +90,11 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
   };
 
   const swapBlocks = async (min, current) => {
+    if (min === current) return;
+
     const blockContainer = document.getElementById("block-container");
+
+    await waitFor(300);
 
     highlightBlocks(min, current);
 
@@ -87,11 +105,11 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
     await waitFor(300);
 
     toneDownBlocks(min, current);
-
-    await waitFor(300);
   };
 
-  const selectionSort = async () => {
+  const selectionSort = async (event) => {
+    if (isSorting) return;
+    setIsSorting(true);
     const blocksLength = [...document.querySelectorAll(".block")].length;
 
     for (let i = 0; i < blocksLength; i++) {
@@ -100,12 +118,13 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
       const minBlock = findMinBlock(blocks, minBlockHeight);
       await swapBlocks(minBlock, blocks[i]);
     }
+    setIsSorting(false);
   };
 
   return (
     <header className="header">
       <h1 className="header__title">Sorting Visualizer</h1>
-      <form className="header__form" onSubmit={createElements}>
+      <form className="header__form" onSubmit={createBlocksEventHandler}>
         <label className="header__label">number of elements: </label>
         <input className="header__input" id="blocks-input" type="text" />
         <button className="button button--header button--header-confirm">
