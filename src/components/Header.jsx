@@ -32,15 +32,8 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
     setBlocksHeights(randomizeArray(heights));
   };
 
-  const swap = (array, index1, index2) => {
-    let temp = array[index1];
-    array[index1] = array[index2];
-    array[index2] = temp;
-  };
-
   const findMinHeight = (array) => {
     const parsedHeights = parseHeights(array);
-    console.log(parsedHeights);
     const minHeight = Math.min(...parsedHeights);
     return minHeight;
   };
@@ -64,77 +57,49 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
     }
   };
 
-  const swapBlocks = (min, current) => {
-    const blockContainer = document.getElementById("block-container");
-    blockContainer.insertBefore(min, current);
+  const highlightBlocks = (min, current) => {
+    min.classList.add("active");
+    current.classList.add("active");
   };
 
-  const selectionSort = () => {
+  const toneDownBlocks = (min, current) => {
+    min.classList.remove("active");
+    current.classList.remove("active");
+  };
+
+  const waitFor = (miliseconds) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve("");
+      }, miliseconds);
+    });
+  };
+
+  const swapBlocks = async (min, current) => {
+    const blockContainer = document.getElementById("block-container");
+
+    highlightBlocks(min, current);
+
+    await waitFor(1000);
+
+    blockContainer.insertBefore(min, current);
+
+    await waitFor(300);
+
+    toneDownBlocks(min, current);
+
+    await waitFor(300);
+  };
+
+  const selectionSort = async () => {
     const blocksLength = [...document.querySelectorAll(".block")].length;
 
     for (let i = 0; i < blocksLength; i++) {
       const blocks = [...document.querySelectorAll(".block")];
       const minBlockHeight = findMinHeight(blocks.slice(i));
       const minBlock = findMinBlock(blocks, minBlockHeight);
-      swapBlocks(minBlock, blocks[i]);
+      await swapBlocks(minBlock, blocks[i]);
     }
-
-    ////////////////////////////////////////////
-
-    // for (let i = 0; i < blocks.length; i++) {
-    //   const min = Math.min(...parsedHeights.slice(i));
-
-    //   let minBlock;
-    //   blocks.forEach((block) => {
-    //     if (block.style.height === `${min}%`) minBlock = block;
-    //   });
-
-    //   const minBlockIndex = blocks.indexOf(minBlock);
-
-    /////////////////////////////////////
-
-    // blocks.forEach((block) => {
-    //   if (block.style.height === `${min}%`) minBlock = block;
-    // });
-
-    // minBlock.classList.add("active");
-
-    // setTimeout(() => {
-    //   minBlock.classList.remove("active");
-    // }, 1000);
-
-    //////////////////////////////////////////
-
-    // blocks.forEach((block) => {
-    //   const height = block.style.height;
-    //   const parsedHeight = +height.replace("%", "");
-    //   heightsArray.push(parsedHeight);
-    // });
-
-    // for (let i = 0; i < blocks.length; i++) {
-    //   const min = Math.min(...heightsArray);
-    //   const minBlockIndex = heightsArray.indexOf(min);
-    //   const firstBlock = blockContainer.firstChild;
-
-    //   blocks[minBlockIndex].classList.add("active");
-    //   firstBlock.classList.add("active");
-
-    //   const myPromise = new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //       blocks[minBlockIndex].classList.remove("active");
-    //       firstBlock.classList.remove("active");
-    //       resolve();
-    //     }, 1000);
-    //   });
-
-    //   await myPromise.then(
-    //     setTimeout(() => {
-    //       blockContainer.insertBefore(blocks[minBlockIndex], firstBlock);
-    //     }, 500)
-    //   );
-
-    //   heightsArray[minBlockIndex] = Math.max(...heightsArray) + 1;
-    // }
   };
 
   return (
