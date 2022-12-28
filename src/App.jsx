@@ -1,30 +1,44 @@
 import { useState, useEffect } from "react";
+import { nanoid } from "nanoid";
 
 import Header from "./components/Header";
 
 import "./sass/style.sass";
 
 function App() {
-  const [blocksHeights, setBlocksHeights] = useState(null);
+  const [blockNodesHeights, setBlockNodesHeights] = useState(null);
+  const [blocks, setBlocks] = useState(null);
+
+  // const removeBlocks = () => {
+  //   const blockContainer = document.getElementById("block-container");
+  //   if (blockContainer) blockContainer.innerHTML = "";
+  // };
+
+  const createBlocks = () => {
+    const Blocks = () => {
+      return (
+        <main id="block-container">
+          {blockNodesHeights.map((blockHeight) => (
+            <div style={{ height: blockHeight }} className="block"></div>
+          ))}
+        </main>
+      );
+    };
+
+    setBlocks(Blocks);
+  };
+
+  useEffect(() => {
+    blockNodesHeights && createBlocks();
+  }, [blockNodesHeights]);
 
   return (
     <>
       <Header
-        blocksHeights={blocksHeights}
-        setBlocksHeights={setBlocksHeights}
+        blockNodesHeights={blockNodesHeights}
+        setBlockNodesHeights={setBlockNodesHeights}
       />
-      {blocksHeights && (
-        <main id="block-container">
-          {blocksHeights.map((blockHeight, index) => (
-            <div
-              key={index}
-              style={{ height: blockHeight }}
-              className="block"
-              id={`block-${index}`}
-            ></div>
-          ))}
-        </main>
-      )}
+      {blockNodesHeights && blocks}
     </>
   );
 }

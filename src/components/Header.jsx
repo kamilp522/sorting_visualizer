@@ -3,11 +3,12 @@ import { useState } from "react";
 import { randomizeArray } from "../helpers/randomizeArray";
 import { checkIfNumber } from "../helpers/checkIfNumber";
 
-const Header = ({ blocksHeights, setBlocksHeights }) => {
+const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
   const [isSorting, setIsSorting] = useState(false);
 
   const createBlocksEventHandler = (event) => {
     event.preventDefault();
+
     let numberOfElementsInput = document.getElementById("blocks-input");
     const blocksNumber = Number(numberOfElementsInput.value);
     numberOfElementsInput.value = "";
@@ -22,26 +23,17 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
       return;
     }
 
-    createBlocks(blocksNumber);
+    createBlockHeights(blocksNumber);
   };
 
-  const createBlocks = (number) => {
+  const createBlockHeights = (number) => {
     const heights = [];
     for (let i = 1; i <= number; i++) {
       const smallestUnit = 100 / number;
       heights.push(`${smallestUnit * i}%`);
     }
 
-    setBlocksHeights(randomizeArray(heights));
-  };
-
-  const removeBlocks = () => {
-    const blockContainer = document.getElementById("block-container");
-    blockContainer.innerHTML = "";
-    // const blocks = [...document.querySelectorAll(".block")];
-    // for (let i = 0; i < blocks.length; i++) {
-    //   blocks[i].remove();
-    // }
+    setBlockNodesHeights(randomizeArray(heights));
   };
 
   const findMinHeight = (array) => {
@@ -89,6 +81,7 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
 
   const swapBlocks = async (array, min, current) => {
     if (min === current) return;
+    if (!blockNodesHeights) return;
     const speed = 1000;
     const blockContainer = document.getElementById("block-container");
 
@@ -96,27 +89,26 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
     highlightBlocks(min, current);
 
     await waitFor(speed);
-    const minCopy = min.cloneNode(true);
-    const currentCopy = current.cloneNode(true);
-
-    blockContainer.replaceChild(minCopy, current);
-    blockContainer.replaceChild(currentCopy, min);
+    const minIndex = array.indexOf(min);
+    blockContainer.insertBefore(min, current);
+    blockContainer.insertBefore(current, array[minIndex + 1]);
 
     await waitFor(speed / 3);
-    toneDownBlocks(minCopy, currentCopy);
+    toneDownBlocks(min, current);
   };
 
   const selectionSort = async (event) => {
     if (isSorting) return;
     setIsSorting(true);
-    const blocksLength = [...document.querySelectorAll(".block")].length;
 
+    const blocksLength = [...document.querySelectorAll(".block")].length;
     for (let i = 0; i < blocksLength; i++) {
       const blocks = [...document.querySelectorAll(".block")];
       const minBlockHeight = findMinHeight(blocks.slice(i));
       const minBlock = findMinBlock(blocks, minBlockHeight);
       await swapBlocks(blocks, minBlock, blocks[i]);
     }
+
     setIsSorting(false);
   };
 
@@ -137,7 +129,7 @@ const Header = ({ blocksHeights, setBlocksHeights }) => {
         </button>
       </form>
 
-      {blocksHeights && (
+      {blockNodesHeights && (
         <>
           <h2 className="header__secondary-title">Choose an algorithm:</h2>
 
