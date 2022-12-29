@@ -8,7 +8,7 @@ import "./sass/style.sass";
 function App() {
   const [blockNodesHeights, setBlockNodesHeights] = useState(null);
   const [blocks, setBlocks] = useState(null);
-  const [speed, setSpeed] = useState(null);
+  const [speed, setSpeed] = useState(1000);
 
   const createBlocks = () => {
     const Blocks = () => {
@@ -36,7 +36,7 @@ function App() {
         speed={speed}
         setSpeed={setSpeed}
       />
-      {speed && blocks}
+      {blockNodesHeights && blocks}
     </>
   );
 }

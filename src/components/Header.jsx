@@ -11,9 +11,14 @@ const Header = ({
 }) => {
   const [isSorting, setIsSorting] = useState(false);
 
+  const resetBlocks = () => {
+    setBlockNodesHeights(null);
+    setSpeed(null);
+  };
+
   const createBlocksHandler = (event) => {
     event.preventDefault();
-    setSpeed(null);
+    resetBlocks();
 
     let numberOfElementsInput = document.getElementById("blocks-input");
     const blocksNumber = Number(numberOfElementsInput.value);
@@ -24,12 +29,14 @@ const Header = ({
       return;
     }
 
-    if (blocksNumber < 5 || blocksNumber > 100) {
-      console.log("Input has to be a number in range between 5 and 100!");
+    if (blocksNumber < 5 || blocksNumber > 1000) {
+      console.log("Input has to be a number in range between 5 and 1000!");
       return;
     }
 
     createBlockHeights(blocksNumber);
+    const miliseconds = speedSelectToMiliseconds();
+    setSpeed(miliseconds);
   };
 
   const createBlockHeights = (number) => {
@@ -119,87 +126,92 @@ const Header = ({
 
   const parseSpeedInput = (input) => +input.replace("x", "");
 
-  const speedSelectToMiliseconds = (input) => (1 / input) * 1000;
+  const speedSelectToMiliseconds = () => {
+    let speedSelect = document.getElementById("speed-select");
+    if (!speedSelect) return 1000;
+    const parsedSpeedSelect = parseSpeedInput(speedSelect.value);
+    const miliseconds = (1 / parsedSpeedSelect) * 1000;
+    return miliseconds;
+  };
 
   const chooseSpeedHandler = (event) => {
     event.preventDefault();
-
-    const speedSelect = document.getElementById("speed-select").value;
-    const parsedSpeedSelect = parseSpeedInput(speedSelect);
-    const miliseconds = speedSelectToMiliseconds(parsedSpeedSelect);
-
+    const miliseconds = speedSelectToMiliseconds();
     setSpeed(miliseconds);
   };
 
   return (
     <header className="header">
       <h1 className="header__title">Sorting Visualizer</h1>
+
       <form className="header__form" onSubmit={createBlocksHandler}>
-        <label className="header__label">number of elements: </label>
-        <input className="header__input" id="blocks-input" type="text" />
-        <button className="button button--header button--header-confirm">
-          confirm
+        {!isSorting && (
+          <>
+            <label className="header__label">number of elements: </label>
+            <input className="header__input" id="blocks-input" type="text" />
+            <button className="button button--header button--bold">
+              confirm
+            </button>
+          </>
+        )}
+        <button
+          type="button"
+          onClick={resetBlocks}
+          className="button button--header button--bold"
+        >
+          reset
         </button>
       </form>
 
-      {blockNodesHeights && (
+      {!isSorting && blockNodesHeights && (
         <>
-          {blockNodesHeights && (
-            <form>
-              <label className="header__label">choose speed:</label>
-              <select
-                defaultValue="x1"
-                id="speed-select"
-                className="header__select"
-                onChange={chooseSpeedHandler}
-              >
-                <option value="x0.5">x0.5</option>
-                <option value="x1">x1</option>
-                <option value="x3">x3</option>
-                <option value="x5">x5</option>
-                <option value="x10">x10</option>
-                <option value="x25">x25</option>
-                <option value="x100">x100</option>
-              </select>
-            </form>
-          )}
-
-          {speed && (
-            <>
-              <h2 className="header__secondary-title">Choose an algorithm:</h2>
-              <ul className="header__list">
-                <li className="header__item">
-                  <button
-                    className="button button--header"
-                    onClick={selectionSort}
-                  >
-                    Selection
-                  </button>
-                </li>
-                <li className="header__item">
-                  <button className="button button--header">Bubble</button>
-                </li>
-                <li className="header__item">
-                  <button className="button button--header">Insertion</button>
-                </li>
-                <li className="header__item">
-                  <button className="button button--header">Merge</button>
-                </li>
-                <li className="header__item">
-                  <button className="button button--header">Quick</button>
-                </li>
-                <li className="header__item">
-                  <button className="button button--header">Heap</button>
-                </li>
-                <li className="header__item">
-                  <button className="button button--header">Radix</button>
-                </li>
-                <li className="header__item">
-                  <button className="button button--header">Bogo</button>
-                </li>
-              </ul>
-            </>
-          )}
+          <form>
+            <label className="header__label">choose speed:</label>
+            <select
+              defaultValue="x1"
+              id="speed-select"
+              className="header__select"
+              onChange={chooseSpeedHandler}
+            >
+              <option value="x0.5">x0.5</option>
+              <option value="x1">x1</option>
+              <option value="x3">x3</option>
+              <option value="x5">x5</option>
+              <option value="x10">x10</option>
+              <option value="x25">x25</option>
+              <option value="x100">x100</option>
+              <option value="x1000">x1000</option>
+            </select>
+          </form>
+          <h2 className="header__secondary-title">Choose an algorithm:</h2>
+          <ul className="header__list">
+            <li className="header__item">
+              <button className="button button--header" onClick={selectionSort}>
+                Selection
+              </button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Bubble</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Insertion</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Merge</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Quick</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Heap</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Radix</button>
+            </li>
+            <li className="header__item">
+              <button className="button button--header">Bogo</button>
+            </li>
+          </ul>
         </>
       )}
     </header>
