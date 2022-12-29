@@ -8,11 +8,7 @@ import "./sass/style.sass";
 function App() {
   const [blockNodesHeights, setBlockNodesHeights] = useState(null);
   const [blocks, setBlocks] = useState(null);
-
-  // const removeBlocks = () => {
-  //   const blockContainer = document.getElementById("block-container");
-  //   if (blockContainer) blockContainer.innerHTML = "";
-  // };
+  const [speed, setSpeed] = useState(null);
 
   const createBlocks = () => {
     const Blocks = () => {
@@ -37,8 +33,10 @@ function App() {
       <Header
         blockNodesHeights={blockNodesHeights}
         setBlockNodesHeights={setBlockNodesHeights}
+        speed={speed}
+        setSpeed={setSpeed}
       />
-      {blockNodesHeights && blocks}
+      {speed && blocks}
     </>
   );
 }

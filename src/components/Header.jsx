@@ -3,11 +3,17 @@ import { useState } from "react";
 import { randomizeArray } from "../helpers/randomizeArray";
 import { checkIfNumber } from "../helpers/checkIfNumber";
 
-const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
+const Header = ({
+  blockNodesHeights,
+  setBlockNodesHeights,
+  speed,
+  setSpeed,
+}) => {
   const [isSorting, setIsSorting] = useState(false);
 
-  const createBlocksEventHandler = (event) => {
+  const createBlocksHandler = (event) => {
     event.preventDefault();
+    setSpeed(null);
 
     let numberOfElementsInput = document.getElementById("blocks-input");
     const blocksNumber = Number(numberOfElementsInput.value);
@@ -82,7 +88,6 @@ const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
   const swapBlocks = async (array, min, current) => {
     if (min === current) return;
     if (!blockNodesHeights) return;
-    const speed = 1000;
     const blockContainer = document.getElementById("block-container");
 
     await waitFor(speed / 3);
@@ -112,55 +117,89 @@ const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
     setIsSorting(false);
   };
 
+  const parseSpeedInput = (input) => +input.replace("x", "");
+
+  const speedSelectToMiliseconds = (input) => (1 / input) * 1000;
+
+  const chooseSpeedHandler = (event) => {
+    event.preventDefault();
+
+    const speedSelect = document.getElementById("speed-select").value;
+    const parsedSpeedSelect = parseSpeedInput(speedSelect);
+    const miliseconds = speedSelectToMiliseconds(parsedSpeedSelect);
+
+    setSpeed(miliseconds);
+  };
+
   return (
     <header className="header">
       <h1 className="header__title">Sorting Visualizer</h1>
-      <form className="header__form" onSubmit={createBlocksEventHandler}>
+      <form className="header__form" onSubmit={createBlocksHandler}>
         <label className="header__label">number of elements: </label>
         <input className="header__input" id="blocks-input" type="text" />
         <button className="button button--header button--header-confirm">
           confirm
         </button>
-        <button
-          type="button"
-          className="button button--header button--header-confirm"
-        >
-          randomize
-        </button>
       </form>
 
       {blockNodesHeights && (
         <>
-          <h2 className="header__secondary-title">Choose an algorithm:</h2>
+          {blockNodesHeights && (
+            <form>
+              <label className="header__label">choose speed:</label>
+              <select
+                defaultValue="x1"
+                id="speed-select"
+                className="header__select"
+                onChange={chooseSpeedHandler}
+              >
+                <option value="x0.5">x0.5</option>
+                <option value="x1">x1</option>
+                <option value="x3">x3</option>
+                <option value="x5">x5</option>
+                <option value="x10">x10</option>
+                <option value="x25">x25</option>
+                <option value="x100">x100</option>
+              </select>
+            </form>
+          )}
 
-          <ul className="header__list">
-            <li className="header__item">
-              <button className="button button--header" onClick={selectionSort}>
-                Selection
-              </button>
-            </li>
-            <li className="header__item">
-              <button className="button button--header">Bubble</button>
-            </li>
-            <li className="header__item">
-              <button className="button button--header">Insertion</button>
-            </li>
-            <li className="header__item">
-              <button className="button button--header">Merge</button>
-            </li>
-            <li className="header__item">
-              <button className="button button--header">Quick</button>
-            </li>
-            <li className="header__item">
-              <button className="button button--header">Heap</button>
-            </li>
-            <li className="header__item">
-              <button className="button button--header">Radix</button>
-            </li>
-            <li className="header__item">
-              <button className="button button--header">Bogo</button>
-            </li>
-          </ul>
+          {speed && (
+            <>
+              <h2 className="header__secondary-title">Choose an algorithm:</h2>
+              <ul className="header__list">
+                <li className="header__item">
+                  <button
+                    className="button button--header"
+                    onClick={selectionSort}
+                  >
+                    Selection
+                  </button>
+                </li>
+                <li className="header__item">
+                  <button className="button button--header">Bubble</button>
+                </li>
+                <li className="header__item">
+                  <button className="button button--header">Insertion</button>
+                </li>
+                <li className="header__item">
+                  <button className="button button--header">Merge</button>
+                </li>
+                <li className="header__item">
+                  <button className="button button--header">Quick</button>
+                </li>
+                <li className="header__item">
+                  <button className="button button--header">Heap</button>
+                </li>
+                <li className="header__item">
+                  <button className="button button--header">Radix</button>
+                </li>
+                <li className="header__item">
+                  <button className="button button--header">Bogo</button>
+                </li>
+              </ul>
+            </>
+          )}
         </>
       )}
     </header>
