@@ -35,7 +35,12 @@ const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
               setIsSorting={setIsSorting}
               speed={speed}
             />
-            <BubbleSort />
+            <BubbleSort
+              blockNodesHeights={blockNodesHeights}
+              isSorting={isSorting}
+              setIsSorting={setIsSorting}
+              speed={speed}
+            />
 
             <li className="header__item">
               <button className="button button--header">Insertion</button>

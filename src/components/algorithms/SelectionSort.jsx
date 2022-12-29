@@ -8,8 +8,7 @@ const SelectionSort = ({
     if (isSorting) return;
     setIsSorting(true);
 
-    const blocksLength = [...document.querySelectorAll(".main__block")].length;
-    for (let i = 0; i < blocksLength; i++) {
+    for (let i = 0; i < blockNodesHeights.length; i++) {
       const blocks = [...document.querySelectorAll(".main__block")];
       const minBlockHeight = findMinHeight(blocks.slice(i));
       const minBlock = findMinBlock(blocks, minBlockHeight);

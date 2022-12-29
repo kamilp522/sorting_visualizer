@@ -45,13 +45,16 @@ const CreateBlocksForm = ({
     setBlockNodesHeights(randomizeArray(heights));
   };
 
-  const randomizeBlocks = () => createBlockHeights(blockNodesHeights.length);
+  const randomizeBlocks = () => {
+    if (!blockNodesHeights) return;
+    createBlockHeights(blockNodesHeights.length);
+  };
 
   return (
     <form className="header__form" onSubmit={createBlocksHandler}>
       {!isSorting && (
         <>
-          <label className="header__label">number of elements: </label>
+          <label className="header__label">enter elements (5 to 1000): </label>
           <input className="header__input" id="blocks-input" type="text" />
           <button className="button button--header button--bold">
             confirm
