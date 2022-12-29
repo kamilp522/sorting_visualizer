@@ -9,7 +9,7 @@ const CreateBlocksForm = ({
 }) => {
   const resetBlocks = () => {
     setBlockNodesHeights(null);
-    setSpeed(null);
+    setSpeed(speed);
   };
 
   const createBlocksHandler = (event) => {

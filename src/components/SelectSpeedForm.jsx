@@ -1,4 +1,4 @@
-const SelectSpeedForm = ({ setSpeed }) => {
+const SelectSpeedForm = ({ speed, setSpeed }) => {
   const chooseSpeedHandler = (event) => {
     event.preventDefault();
     const miliseconds = speedSelectToMiliseconds();
@@ -19,7 +19,7 @@ const SelectSpeedForm = ({ setSpeed }) => {
     <form>
       <label className="header__label">choose speed:</label>
       <select
-        defaultValue="x1"
+        defaultValue={`x${1000 / speed}`}
         id="speed-select"
         className="header__select"
         onChange={chooseSpeedHandler}

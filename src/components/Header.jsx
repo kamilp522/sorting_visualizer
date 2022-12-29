@@ -4,13 +4,9 @@ import CreateBlocksForm from "./CreateBlocksForm";
 import SelectSpeedForm from "./SelectSpeedForm";
 import SelectionSort from "./algorithms/SelectionSort";
 
-const Header = ({
-  blockNodesHeights,
-  setBlockNodesHeights,
-  speed,
-  setSpeed,
-}) => {
+const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
   const [isSorting, setIsSorting] = useState(false);
+  const [speed, setSpeed] = useState(1000);
 
   return (
     <header className="header">
@@ -28,10 +24,11 @@ const Header = ({
             elements:
             <span className="header__span">{blockNodesHeights.length}</span>
           </p>
-          <SelectSpeedForm setSpeed={setSpeed} />
+          <SelectSpeedForm speed={speed} setSpeed={setSpeed} />
           <h2 className="header__secondary-title">Choose an algorithm:</h2>
           <ul className="header__list">
             <SelectionSort
+              blockNodesHeights={blockNodesHeights}
               isSorting={isSorting}
               setIsSorting={setIsSorting}
               speed={speed}

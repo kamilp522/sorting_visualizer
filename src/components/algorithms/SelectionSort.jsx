@@ -1,11 +1,16 @@
-const SelectionSort = ({ isSorting, setIsSorting, speed }) => {
+const SelectionSort = ({
+  blockNodesHeights,
+  isSorting,
+  setIsSorting,
+  speed,
+}) => {
   const selectionSort = async () => {
     if (isSorting) return;
     setIsSorting(true);
 
-    const blocksLength = [...document.querySelectorAll(".block")].length;
+    const blocksLength = [...document.querySelectorAll(".main__block")].length;
     for (let i = 0; i < blocksLength; i++) {
-      const blocks = [...document.querySelectorAll(".block")];
+      const blocks = [...document.querySelectorAll(".main__block")];
       const minBlockHeight = findMinHeight(blocks.slice(i));
       const minBlock = findMinBlock(blocks, minBlockHeight);
       await swapBlocks(blocks, minBlock, blocks[i]);
@@ -41,7 +46,7 @@ const SelectionSort = ({ isSorting, setIsSorting, speed }) => {
 
   const swapBlocks = async (array, min, current) => {
     if (min === current) return;
-    // if (!blockNodesHeights) return;
+    if (!blockNodesHeights) return;
     const blockContainer = document.getElementById("block-container");
 
     await waitFor(speed / 3);

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
 
 import Header from "./components/Header";
 
@@ -8,14 +7,13 @@ import "./sass/style.sass";
 function App() {
   const [blockNodesHeights, setBlockNodesHeights] = useState(null);
   const [blocks, setBlocks] = useState(null);
-  const [speed, setSpeed] = useState(1000);
 
   const createBlocks = () => {
     const Blocks = () => {
       return (
-        <main id="block-container">
+        <main id="block-container" className="main">
           {blockNodesHeights.map((blockHeight) => (
-            <div style={{ height: blockHeight }} className="block"></div>
+            <div style={{ height: blockHeight }} className="main__block"></div>
           ))}
         </main>
       );
@@ -33,8 +31,6 @@ function App() {
       <Header
         blockNodesHeights={blockNodesHeights}
         setBlockNodesHeights={setBlockNodesHeights}
-        speed={speed}
-        setSpeed={setSpeed}
       />
       {blockNodesHeights && blocks}
     </>

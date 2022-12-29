@@ -1,4 +1,3 @@
-@use "breakpoints" as br
 @use "abstracts" as abs
 @use "reset"
 @use "components"
@@ -10,24 +9,6 @@ body
     margin: 0.5em
 
 
-main 
-    display: flex
-    justify-content: space-around
-    align-items: flex-end
-    border-radius: 8px
-    border: 1px solid abs.$black-900
-    padding: 1em 0.5em 0
-    margin-block: 0.75em
-    height: calc(100vh - 200px)
-
-    & .block
-        height: 100%
-        flex-grow: 1
-        // margin: 0 1.5px
-        background: abs.$red-900
-
-        &.active
-            background: abs.$red-500
 
 
             
