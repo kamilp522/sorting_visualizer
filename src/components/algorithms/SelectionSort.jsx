@@ -1,3 +1,10 @@
+import { parseHeights } from "./helpers/parseHeightsHelpers";
+import {
+  highlightBlocks,
+  toneDownBlocks,
+  waitFor,
+} from "./helpers/animationHelpers";
+
 const SelectionSort = ({
   blockNodesHeights,
   isSorting,
@@ -24,15 +31,6 @@ const SelectionSort = ({
     return minHeight;
   };
 
-  const parseHeights = (array) => {
-    const parsedHeights = [];
-    for (let i = 0; i < array.length; i++) {
-      const parsedHeight = +array[i].style.height.replace("%", "");
-      parsedHeights.push(parsedHeight);
-    }
-    return parsedHeights;
-  };
-
   const findMinBlock = (array, height) => {
     let minBlock;
     for (let i = 0; i < array.length; i++) {
@@ -46,6 +44,7 @@ const SelectionSort = ({
   const swapBlocks = async (array, min, current) => {
     if (min === current) return;
     if (!blockNodesHeights) return;
+
     const blockContainer = document.getElementById("block-container");
 
     await waitFor(speed / 3);
@@ -58,24 +57,6 @@ const SelectionSort = ({
 
     await waitFor(speed / 3);
     toneDownBlocks(min, current);
-  };
-
-  const highlightBlocks = (min, current) => {
-    min.classList.add("active");
-    current.classList.add("active");
-  };
-
-  const toneDownBlocks = (min, current) => {
-    min.classList.remove("active");
-    current.classList.remove("active");
-  };
-
-  const waitFor = (miliseconds) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve("");
-      }, miliseconds);
-    });
   };
 
   return (

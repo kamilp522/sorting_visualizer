@@ -12,4 +12,4 @@ I'll update this readme along with the project.
 
 The current version of the program doesn't measure the actual algorithm performance. It shows how the shown method works but speed is controlled by the user.
 
-The performance measurements will be implemented in the future
+The performance measurements will be implemented in the future.
