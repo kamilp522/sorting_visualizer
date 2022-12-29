@@ -24,14 +24,12 @@ const SelectSpeedForm = ({ speed, setSpeed }) => {
         className="header__select"
         onChange={chooseSpeedHandler}
       >
-        <option value="x0.5">x0.5</option>
         <option value="x1">x1</option>
         <option value="x3">x3</option>
         <option value="x5">x5</option>
         <option value="x10">x10</option>
         <option value="x25">x25</option>
         <option value="x100">x100</option>
-        <option value="x1000">x1000</option>
       </select>
     </form>
   );

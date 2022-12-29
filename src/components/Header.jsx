@@ -3,6 +3,7 @@ import { useState } from "react";
 import CreateBlocksForm from "./CreateBlocksForm";
 import SelectSpeedForm from "./SelectSpeedForm";
 import SelectionSort from "./algorithms/SelectionSort";
+import BubbleSort from "./algorithms/BubbleSort";
 
 const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
   const [isSorting, setIsSorting] = useState(false);
@@ -12,6 +13,7 @@ const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
     <header className="header">
       <h1 className="header__title">Sorting Visualizer</h1>
       <CreateBlocksForm
+        blockNodesHeights={blockNodesHeights}
         setBlockNodesHeights={setBlockNodesHeights}
         speed={speed}
         setSpeed={setSpeed}
@@ -33,9 +35,8 @@ const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
               setIsSorting={setIsSorting}
               speed={speed}
             />
-            <li className="header__item">
-              <button className="button button--header">Bubble</button>
-            </li>
+            <BubbleSort />
+
             <li className="header__item">
               <button className="button button--header">Insertion</button>
             </li>

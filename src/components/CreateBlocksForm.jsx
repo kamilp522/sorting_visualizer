@@ -2,6 +2,7 @@ import { randomizeArray } from "../helpers/randomizeArray";
 import { checkIfNumber } from "../helpers/checkIfNumber";
 
 const CreateBlocksForm = ({
+  blockNodesHeights,
   setBlockNodesHeights,
   speed,
   setSpeed,
@@ -44,6 +45,8 @@ const CreateBlocksForm = ({
     setBlockNodesHeights(randomizeArray(heights));
   };
 
+  const randomizeBlocks = () => createBlockHeights(blockNodesHeights.length);
+
   return (
     <form className="header__form" onSubmit={createBlocksHandler}>
       {!isSorting && (
@@ -52,6 +55,13 @@ const CreateBlocksForm = ({
           <input className="header__input" id="blocks-input" type="text" />
           <button className="button button--header button--bold">
             confirm
+          </button>
+          <button
+            type="button"
+            onClick={randomizeBlocks}
+            className="button button--header button--bold"
+          >
+            randomize
           </button>
         </>
       )}
