@@ -4,7 +4,6 @@ import {
   toneDownBlocks,
   waitFor,
 } from "./helpers/animationHelpers";
-import { indexOf } from "lodash";
 
 const SelectionSort = ({
   blockNodesHeights,
@@ -28,8 +27,8 @@ const SelectionSort = ({
 
   const findMinHeight = async (array) => {
     const parsedHeights = parseHeights(array);
-    let minHeight = parsedHeights[0];
-    let currentMinBlock = array[0];
+    let currentMinHeight = parsedHeights[0];
+    let currentMinBlock = null;
 
     highlightBlocks(array[0]);
 
@@ -37,11 +36,12 @@ const SelectionSort = ({
       await waitFor(speed / 3);
       highlightBlocks(array[i]);
 
-      if (minHeight > parsedHeights[i]) {
-        await waitFor(speed / 3);
-        toneDownBlocks[currentMinBlock];
-
-        minHeight = parsedHeights[i];
+      if (parsedHeights[i] < currentMinHeight) {
+        if (currentMinBlock) {
+          await waitFor(speed / 3);
+          toneDownBlocks(currentMinBlock);
+        }
+        currentMinHeight = parsedHeights[i];
         currentMinBlock = array[i];
       } else {
         await waitFor(speed / 3);
@@ -49,7 +49,7 @@ const SelectionSort = ({
       }
     }
 
-    return minHeight;
+    return currentMinHeight;
   };
 
   const findMinBlock = (array, height) => {

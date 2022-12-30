@@ -26,7 +26,7 @@ const CreateBlocksForm = ({
       return;
     }
 
-    if (blocksNumber < 5 || blocksNumber > 1000) {
+    if (blocksNumber < 5 || blocksNumber > 100) {
       console.log("Input has to be a number in range between 5 and 1000!");
       return;
     }
@@ -54,7 +54,7 @@ const CreateBlocksForm = ({
     <form className="header__form" onSubmit={createBlocksHandler}>
       {!isSorting && (
         <>
-          <label className="header__label">enter elements (5 to 1000): </label>
+          <label className="header__label">enter elements (5 to 100): </label>
           <input className="header__input" id="blocks-input" type="text" />
           <button className="button button--header button--bold">
             confirm
