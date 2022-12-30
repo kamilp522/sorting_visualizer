@@ -12,9 +12,8 @@ const BubbleSort = ({ blockNodesHeights, isSorting, setIsSorting, speed }) => {
 
     for (let i = 0; i < blockNodesHeights.length; i++) {
       let swaps = 0;
-      for (let j = 0; j < blockNodesHeights.length - 1; j++) {
+      for (let j = 0; j < blockNodesHeights.length - i - 1; j++) {
         const blocks = [...document.querySelectorAll(".main__block")];
-
         if (!blocks.length) setIsSorting(false);
 
         const currentBlockHeight = parseHeight(blocks[j]);

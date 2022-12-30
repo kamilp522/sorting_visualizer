@@ -33,6 +33,12 @@ const SelectionSort = ({
     highlightBlocks(array[0]);
 
     for (let i = 1; i < parsedHeights.length; i++) {
+      const blocks = [...document.querySelectorAll(".main__block")];
+      if (!blocks.length) {
+        setIsSorting(false);
+        return;
+      }
+
       await waitFor(speed / 3);
       highlightBlocks(array[i]);
 
@@ -63,7 +69,6 @@ const SelectionSort = ({
   };
 
   const swapBlocks = async (array, min, current) => {
-    // if (min === current) return;
     if (!blockNodesHeights) return;
 
     const blockContainer = document.getElementById("block-container");
