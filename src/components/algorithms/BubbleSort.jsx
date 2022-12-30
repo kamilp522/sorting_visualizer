@@ -11,15 +11,29 @@ const BubbleSort = ({ blockNodesHeights, isSorting, setIsSorting, speed }) => {
     setIsSorting(true);
 
     for (let i = 0; i < blockNodesHeights.length; i++) {
+      let swaps = 0;
       for (let j = 0; j < blockNodesHeights.length - 1; j++) {
         const blocks = [...document.querySelectorAll(".main__block")];
+
+        if (!blocks.length) setIsSorting(false);
 
         const currentBlockHeight = parseHeight(blocks[j]);
         const nextBlockHeight = parseHeight(blocks[j + 1]);
 
+        await waitFor(speed / 3);
+        highlightBlocks(blocks[j], blocks[j + 1]);
+
         if (currentBlockHeight > nextBlockHeight) {
+          swaps++;
           await swapBlocks(blocks[j], blocks[j + 1]);
         }
+
+        await waitFor(speed / 3);
+        toneDownBlocks(blocks[j], blocks[j + 1]);
+      }
+      if (!swaps) {
+        setIsSorting(false);
+        return;
       }
     }
 
@@ -29,14 +43,8 @@ const BubbleSort = ({ blockNodesHeights, isSorting, setIsSorting, speed }) => {
   const swapBlocks = async (current, next) => {
     const blockContainer = document.getElementById("block-container");
 
-    await waitFor(speed / 3);
-    highlightBlocks(current, next);
-
     await waitFor(speed);
     blockContainer.insertBefore(next, current);
-
-    await waitFor(speed / 3);
-    toneDownBlocks(current, next);
   };
 
   return (

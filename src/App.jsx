@@ -12,8 +12,12 @@ function App() {
     const Blocks = () => {
       return (
         <main id="block-container" className="main">
-          {blockNodesHeights.map((blockHeight) => (
-            <div style={{ height: blockHeight }} className="main__block"></div>
+          {blockNodesHeights.map((blockHeight, index) => (
+            <div
+              key={index}
+              style={{ height: blockHeight }}
+              className="main__block"
+            ></div>
           ))}
         </main>
       );

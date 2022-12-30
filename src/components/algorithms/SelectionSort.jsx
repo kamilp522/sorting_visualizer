@@ -4,6 +4,7 @@ import {
   toneDownBlocks,
   waitFor,
 } from "./helpers/animationHelpers";
+import { indexOf } from "lodash";
 
 const SelectionSort = ({
   blockNodesHeights,
@@ -17,7 +18,7 @@ const SelectionSort = ({
 
     for (let i = 0; i < blockNodesHeights.length; i++) {
       const blocks = [...document.querySelectorAll(".main__block")];
-      const minBlockHeight = findMinHeight(blocks.slice(i));
+      const minBlockHeight = await findMinHeight(blocks.slice(i));
       const minBlock = findMinBlock(blocks, minBlockHeight);
       await swapBlocks(blocks, minBlock, blocks[i]);
     }
@@ -25,9 +26,29 @@ const SelectionSort = ({
     setIsSorting(false);
   };
 
-  const findMinHeight = (array) => {
+  const findMinHeight = async (array) => {
     const parsedHeights = parseHeights(array);
-    const minHeight = Math.min(...parsedHeights);
+    let minHeight = parsedHeights[0];
+    let currentMinBlock = array[0];
+
+    highlightBlocks(array[0]);
+
+    for (let i = 1; i < parsedHeights.length; i++) {
+      await waitFor(speed / 3);
+      highlightBlocks(array[i]);
+
+      if (minHeight > parsedHeights[i]) {
+        await waitFor(speed / 3);
+        toneDownBlocks[currentMinBlock];
+
+        minHeight = parsedHeights[i];
+        currentMinBlock = array[i];
+      } else {
+        await waitFor(speed / 3);
+        toneDownBlocks(array[i]);
+      }
+    }
+
     return minHeight;
   };
 
@@ -42,7 +63,7 @@ const SelectionSort = ({
   };
 
   const swapBlocks = async (array, min, current) => {
-    if (min === current) return;
+    // if (min === current) return;
     if (!blockNodesHeights) return;
 
     const blockContainer = document.getElementById("block-container");
