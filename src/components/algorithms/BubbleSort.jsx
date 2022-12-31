@@ -10,9 +10,9 @@ const BubbleSort = ({ blockNodesHeights, isSorting, setIsSorting, speed }) => {
     if (isSorting) return;
     setIsSorting(true);
 
-    for (let i = 0; i < blockNodesHeights.length; i++) {
+    for (let i = 1; i < blockNodesHeights.length + 1; i++) {
       let swaps = 0;
-      for (let j = 0; j < blockNodesHeights.length - i - 1; j++) {
+      for (let j = 0; j < blockNodesHeights.length - i; j++) {
         const blocks = [...document.querySelectorAll(".main__block")];
         if (!blocks.length) setIsSorting(false);
 
@@ -41,6 +41,7 @@ const BubbleSort = ({ blockNodesHeights, isSorting, setIsSorting, speed }) => {
 
   const swapBlocks = async (current, next) => {
     const blockContainer = document.getElementById("block-container");
+    if (!blockContainer) return;
 
     await waitFor(speed);
     blockContainer.insertBefore(next, current);

@@ -4,6 +4,7 @@ import CreateBlocksForm from "./CreateBlocksForm";
 import SelectSpeedForm from "./SelectSpeedForm";
 import SelectionSort from "./algorithms/SelectionSort";
 import BubbleSort from "./algorithms/BubbleSort";
+import InsertionSort from "./algorithms/InsertionSort";
 
 const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
   const [isSorting, setIsSorting] = useState(false);
@@ -42,9 +43,12 @@ const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
               speed={speed}
             />
 
-            <li className="header__item">
-              <button className="button button--header">Insertion</button>
-            </li>
+            <InsertionSort
+              blockNodesHeights={blockNodesHeights}
+              isSorting={isSorting}
+              setIsSorting={setIsSorting}
+              speed={speed}
+            />
             <li className="header__item">
               <button className="button button--header">Merge</button>
             </li>
