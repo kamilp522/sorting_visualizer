@@ -15,14 +15,15 @@ const InsertionSort = ({
     if (isSorting) return;
     setIsSorting(true);
 
-    for (let i = 1; i < blockNodesHeights.length - 1; i++) {
-      let blocks = [...document.querySelectorAll(".main__block")];
+    for (let i = 1; i < blockNodesHeights.length; i++) {
+      for (let j = i; j > 0; j--) {
+        const blocks = [...document.querySelectorAll(".main__block")];
+        const previousBlockHeight = parseHeight(blocks[j - 1]);
+        const currentBlockHeight = parseHeight(blocks[j]);
 
-      const previousBlockHeight = parseHeight(blocks[i - 1]);
-      const currentBlockHeight = parseHeight(blocks[i]);
-
-      for (let j = i; j > 0 && previousBlockHeight > currentBlockHeight; j--) {
-        swapBlocks(blocks[j], blocks[j - 1]);
+        if (previousBlockHeight > currentBlockHeight) {
+          swapBlocks(blocks[j], blocks[j - 1]);
+        }
       }
     }
 
