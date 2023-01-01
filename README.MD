@@ -14,7 +14,7 @@ The current version of the program doesn't measure the actual algorithm performa
 
 The performance measurements will be implemented in the future.
 
-### update 01.12.2023
+### update 01.01.2023
 
 Current version has implemented three sorting algorithms:
 
