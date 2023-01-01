@@ -22,4 +22,4 @@ Current version has implemented three sorting algorithms:
 - bubble sort
 - insertion sort
 
-I'll probably add another mode to the application for checking the actual performance of an algorithm on a given set of randomized data; maybe add more variety to the data input for sorting to check usecases for the algorithms.
+I'll probably add another mode to the application for checking the actual performance of an algorithm on a given set of randomized data; maybe add more variety to the data input for sorting to find best usecases for the algorithms.
