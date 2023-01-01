@@ -6,6 +6,7 @@ import {
 } from "./helpers/animationHelpers";
 
 const SelectionSort = ({
+  setCurrentSort,
   blockNodesHeights,
   isSorting,
   setIsSorting,
@@ -14,10 +15,12 @@ const SelectionSort = ({
   const selectionSort = async () => {
     if (isSorting) return;
     setIsSorting(true);
+    setCurrentSort("selection");
 
     for (let i = 0; i < blockNodesHeights.length; i++) {
       const blocks = [...document.querySelectorAll(".main__block")];
       if (!blocks.length) {
+        setCurrentSort("");
         setIsSorting(false);
         return;
       }
@@ -26,6 +29,7 @@ const SelectionSort = ({
       await swapBlocks(blocks, minBlock, blocks[i]);
     }
 
+    setCurrentSort("");
     setIsSorting(false);
   };
 

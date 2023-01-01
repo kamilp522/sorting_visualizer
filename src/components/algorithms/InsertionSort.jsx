@@ -6,6 +6,7 @@ import {
 } from "./helpers/animationHelpers";
 
 const InsertionSort = ({
+  setCurrentSort,
   blockNodesHeights,
   isSorting,
   setIsSorting,
@@ -14,6 +15,7 @@ const InsertionSort = ({
   const insertionSort = async () => {
     if (isSorting) return;
     setIsSorting(true);
+    setCurrentSort("insertion");
 
     for (let i = 1; i < blockNodesHeights.length; i++) {
       const blocksAtStart = [...document.querySelectorAll(".main__block")];
@@ -24,6 +26,7 @@ const InsertionSort = ({
       for (let j = i; j > 0; j--) {
         const blocks = [...document.querySelectorAll(".main__block")];
         if (!blocks.length) {
+          setCurrentSort("");
           setIsSorting(false);
           return;
         }
@@ -52,6 +55,7 @@ const InsertionSort = ({
       toneDownBlocks(blocksAtStart[i]);
     }
 
+    setCurrentSort("");
     setIsSorting(false);
   };
 

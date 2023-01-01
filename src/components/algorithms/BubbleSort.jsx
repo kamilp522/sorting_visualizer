@@ -5,16 +5,24 @@ import {
   waitFor,
 } from "./helpers/animationHelpers";
 
-const BubbleSort = ({ blockNodesHeights, isSorting, setIsSorting, speed }) => {
+const BubbleSort = ({
+  setCurrentSort,
+  blockNodesHeights,
+  isSorting,
+  setIsSorting,
+  speed,
+}) => {
   const bubbleSort = async () => {
     if (isSorting) return;
     setIsSorting(true);
+    setCurrentSort("bubble");
 
     for (let i = 1; i < blockNodesHeights.length + 1; i++) {
       let swaps = 0;
       for (let j = 0; j < blockNodesHeights.length - i; j++) {
         const blocks = [...document.querySelectorAll(".main__block")];
         if (!blocks.length) {
+          setCurrentSort("");
           setIsSorting(false);
           return;
         }
@@ -39,6 +47,7 @@ const BubbleSort = ({ blockNodesHeights, isSorting, setIsSorting, speed }) => {
       }
     }
 
+    setCurrentSort("");
     setIsSorting(false);
   };
 
