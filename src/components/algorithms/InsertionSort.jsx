@@ -16,8 +16,12 @@ const InsertionSort = ({
     setIsSorting(true);
 
     for (let i = 1; i < blockNodesHeights.length; i++) {
+      let blocks = [...document.querySelectorAll(".main__block")];
+
+      highlightBlocks(blocks[i]);
+
       for (let j = i; j > 0; j--) {
-        const blocks = [...document.querySelectorAll(".main__block")];
+        blocks = [...document.querySelectorAll(".main__block")];
         const previousBlockHeight = parseHeight(blocks[j - 1]);
         const currentBlockHeight = parseHeight(blocks[j]);
 
@@ -25,6 +29,8 @@ const InsertionSort = ({
           swapBlocks(blocks[j], blocks[j - 1]);
         }
       }
+
+      toneDownBlocks(blocks[i]);
     }
 
     setIsSorting(false);
@@ -33,8 +39,6 @@ const InsertionSort = ({
   const swapBlocks = (current, previous) => {
     const blockContainer = document.getElementById("block-container");
     if (!blockContainer) return;
-
-    console.log("dziala");
 
     blockContainer.insertBefore(current, previous);
   };
