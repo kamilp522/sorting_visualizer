@@ -13,3 +13,13 @@ I'll update this readme along with the project.
 The current version of the program doesn't measure the actual algorithm performance. It shows how the shown method works but speed is controlled by the user.
 
 The performance measurements will be implemented in the future.
+
+### update 01.12.2023
+
+Current version has implemented three sorting algorithms:
+
+- selection sort
+- bubble sort
+- insertion sort
+
+I'll probably add another mode to the application for checking the actual performance of an algorithm on a given set of randomized data; maybe add more variety to the data input for sorting to check usecases for the algorithms.
