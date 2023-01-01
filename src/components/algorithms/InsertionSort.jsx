@@ -16,21 +16,40 @@ const InsertionSort = ({
     setIsSorting(true);
 
     for (let i = 1; i < blockNodesHeights.length; i++) {
-      let blocks = [...document.querySelectorAll(".main__block")];
+      const blocksAtStart = [...document.querySelectorAll(".main__block")];
 
-      highlightBlocks(blocks[i]);
+      await waitFor(speed / 3);
+      highlightBlocks(blocksAtStart[i]);
 
       for (let j = i; j > 0; j--) {
-        blocks = [...document.querySelectorAll(".main__block")];
+        const blocks = [...document.querySelectorAll(".main__block")];
+        if (!blocks.length) {
+          setIsSorting(false);
+          return;
+        }
+
         const previousBlockHeight = parseHeight(blocks[j - 1]);
         const currentBlockHeight = parseHeight(blocks[j]);
 
+        await waitFor(speed / 3);
+        highlightBlocks(blocks[j - 1], blocks[j]);
+
         if (previousBlockHeight > currentBlockHeight) {
+          await waitFor(speed);
           swapBlocks(blocks[j], blocks[j - 1]);
         }
-      }
 
-      toneDownBlocks(blocks[i]);
+        if (previousBlockHeight < currentBlockHeight) {
+          await waitFor(speed / 3);
+          toneDownBlocks(blocks[j - 1], blocks[j]);
+          break;
+        }
+
+        await waitFor(speed / 3);
+        toneDownBlocks(blocks[j - 1], blocks[j]);
+      }
+      await waitFor(speed / 3);
+      toneDownBlocks(blocksAtStart[i]);
     }
 
     setIsSorting(false);
