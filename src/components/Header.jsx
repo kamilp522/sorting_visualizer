@@ -1,12 +1,16 @@
 import { useState } from "react";
 
+import { useSelector } from "react-redux";
+
 import CreateBlocksForm from "./CreateBlocksForm";
 import SelectSpeedForm from "./SelectSpeedForm";
 import SelectionSort from "./algorithms/SelectionSort";
 import BubbleSort from "./algorithms/BubbleSort";
 import InsertionSort from "./algorithms/InsertionSort";
 
-const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
+const Header = () => {
+  const blockNodesHeights = useSelector((store) => store.heights);
+
   const [isSorting, setIsSorting] = useState(false);
   const [speed, setSpeed] = useState(1000);
   const [currentSort, setCurrentSort] = useState("");
@@ -19,8 +23,8 @@ const Header = ({ blockNodesHeights, setBlockNodesHeights }) => {
       )}
 
       <CreateBlocksForm
-        blockNodesHeights={blockNodesHeights}
-        setBlockNodesHeights={setBlockNodesHeights}
+        // blockNodesHeights={blockNodesHeights}
+        // setBlockNodesHeights={setBlockNodesHeights}
         speed={speed}
         setSpeed={setSpeed}
         isSorting={isSorting}

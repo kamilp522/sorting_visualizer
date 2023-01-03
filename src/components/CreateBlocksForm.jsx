@@ -1,15 +1,24 @@
 import { randomizeArray } from "../helpers/randomizeArray";
 import { checkIfNumber } from "../helpers/checkIfNumber";
 
-const CreateBlocksForm = ({
-  blockNodesHeights,
+import { useSelector, useDispatch } from "react-redux";
+import {
   setBlockNodesHeights,
+  removeBlockNodesHeights,
+} from "../reducers/blockNodesHeightsReducer";
+
+const CreateBlocksForm = ({
+  // blockNodesHeights,
+  // setBlockNodesHeights,
   speed,
   setSpeed,
   isSorting,
 }) => {
+  const blockNodesHeights = useSelector((store) => store.heights);
+  const dispatch = useDispatch();
+
   const resetBlocks = () => {
-    setBlockNodesHeights(null);
+    dispatch(removeBlockNodesHeights());
     setSpeed(speed);
   };
 
@@ -42,7 +51,8 @@ const CreateBlocksForm = ({
       heights.push(`${smallestUnit * i}%`);
     }
 
-    setBlockNodesHeights(randomizeArray(heights));
+    dispatch(setBlockNodesHeights(randomizeArray(heights)));
+    console.log(blockNodesHeights);
   };
 
   const randomizeBlocks = () => {

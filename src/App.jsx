@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 
 import Header from "./components/Header";
 
+import { useSelector } from "react-redux";
+
 import "./sass/style.sass";
 
 function App() {
-  const [blockNodesHeights, setBlockNodesHeights] = useState(null);
+  // const [blockNodesHeights, setBlockNodesHeights] = useState(null);
+
+  const blockNodesHeights = useSelector((store) => store.heights);
   const [blocks, setBlocks] = useState(null);
 
   const createBlocks = () => {
@@ -32,10 +36,7 @@ function App() {
 
   return (
     <>
-      <Header
-        blockNodesHeights={blockNodesHeights}
-        setBlockNodesHeights={setBlockNodesHeights}
-      />
+      <Header />
       {blockNodesHeights && blocks}
     </>
   );
