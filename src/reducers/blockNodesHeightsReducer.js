@@ -8,11 +8,11 @@ const heightsSlice = createSlice({
   reducers: {
     setBlockNodesHeights(state, action) {
       state = action.payload;
-      console.log(state);
+      return state;
     },
     removeBlockNodesHeights(state, action) {
       state = null;
-      console.log(state);
+      return state;
     },
   },
 });

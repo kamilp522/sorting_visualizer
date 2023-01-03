@@ -7,8 +7,6 @@ import { useSelector } from "react-redux";
 import "./sass/style.sass";
 
 function App() {
-  // const [blockNodesHeights, setBlockNodesHeights] = useState(null);
-
   const blockNodesHeights = useSelector((store) => store.heights);
   const [blocks, setBlocks] = useState(null);
 

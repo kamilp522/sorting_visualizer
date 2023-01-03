@@ -23,8 +23,6 @@ const Header = () => {
       )}
 
       <CreateBlocksForm
-        // blockNodesHeights={blockNodesHeights}
-        // setBlockNodesHeights={setBlockNodesHeights}
         speed={speed}
         setSpeed={setSpeed}
         isSorting={isSorting}

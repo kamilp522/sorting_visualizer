@@ -7,13 +7,7 @@ import {
   removeBlockNodesHeights,
 } from "../reducers/blockNodesHeightsReducer";
 
-const CreateBlocksForm = ({
-  // blockNodesHeights,
-  // setBlockNodesHeights,
-  speed,
-  setSpeed,
-  isSorting,
-}) => {
+const CreateBlocksForm = ({ speed, setSpeed, isSorting }) => {
   const blockNodesHeights = useSelector((store) => store.heights);
   const dispatch = useDispatch();
 
@@ -50,9 +44,7 @@ const CreateBlocksForm = ({
       const smallestUnit = 100 / number;
       heights.push(`${smallestUnit * i}%`);
     }
-
     dispatch(setBlockNodesHeights(randomizeArray(heights)));
-    console.log(blockNodesHeights);
   };
 
   const randomizeBlocks = () => {
