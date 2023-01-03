@@ -58,7 +58,7 @@ const CreateBlocksForm = ({ speed, setSpeed, isSorting }) => {
         <>
           <label className="header__label">enter elements (5 to 100): </label>
           <input className="header__input" id="blocks-input" type="text" />
-          <button className="button button--header button--bold">
+          <button type="submit" className="button button--header button--bold">
             confirm
           </button>
           <button

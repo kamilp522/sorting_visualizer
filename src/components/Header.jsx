@@ -15,19 +15,25 @@ const Header = () => {
   const [speed, setSpeed] = useState(1000);
   const [currentSort, setCurrentSort] = useState("");
 
+  const sortProps = {
+    setCurrentSort: setCurrentSort,
+    blockNodesHeights: blockNodesHeights,
+    isSorting: isSorting,
+    setIsSorting: setIsSorting,
+    speed: speed,
+  };
+
   return (
     <header className="header">
       <h1 className="header__title">Sorting Visualizer</h1>
       {currentSort && (
         <h3 className="header__tetriary-title">Current: {currentSort} sort</h3>
       )}
-
       <CreateBlocksForm
         speed={speed}
         setSpeed={setSpeed}
         isSorting={isSorting}
       />
-
       {!isSorting && blockNodesHeights && (
         <>
           <p className="header__paragraph">
@@ -37,28 +43,9 @@ const Header = () => {
           <SelectSpeedForm speed={speed} setSpeed={setSpeed} />
           <h2 className="header__secondary-title">Choose an algorithm:</h2>
           <ul className="header__list">
-            <SelectionSort
-              setCurrentSort={setCurrentSort}
-              blockNodesHeights={blockNodesHeights}
-              isSorting={isSorting}
-              setIsSorting={setIsSorting}
-              speed={speed}
-            />
-            <BubbleSort
-              setCurrentSort={setCurrentSort}
-              blockNodesHeights={blockNodesHeights}
-              isSorting={isSorting}
-              setIsSorting={setIsSorting}
-              speed={speed}
-            />
-
-            <InsertionSort
-              setCurrentSort={setCurrentSort}
-              blockNodesHeights={blockNodesHeights}
-              isSorting={isSorting}
-              setIsSorting={setIsSorting}
-              speed={speed}
-            />
+            <SelectionSort {...sortProps} />
+            <BubbleSort {...sortProps} />
+            <InsertionSort {...sortProps} />
             <li className="header__item">
               <button className="button button--header">Merge</button>
             </li>
