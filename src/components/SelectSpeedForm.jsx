@@ -16,7 +16,7 @@ const SelectSpeedForm = ({ speed, setSpeed }) => {
   const parseSpeedInput = (input) => +input.replace("x", "");
 
   return (
-    <form>
+    <form className="header__form">
       <label className="header__label">choose speed:</label>
       <select
         defaultValue={`x${1000 / speed}`}
