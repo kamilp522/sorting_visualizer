@@ -42,6 +42,7 @@ const BubbleSort = ({
         toneDownBlocks(blocks[j], blocks[j + 1]);
       }
       if (!swaps) {
+        setCurrentSort("");
         setIsSorting(false);
         return;
       }
